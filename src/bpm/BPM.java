@@ -5,6 +5,7 @@
  */
 package bpm;
 
+import TrackAnalyzer.TrackAnalyzer;
 import at.ofai.music.beatroot.BeatRoot;
 import java.io.File;
 import java.util.ArrayList;
@@ -22,13 +23,12 @@ public class BPM {
     ArrayList<String> files = new ArrayList<>();
     List<File> resultados = new ArrayList<File>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // TODO code application logic here
-        File pasta = new File("C:\\Users\\admin\\Desktop\\trackanalyzer-master");
-        BPM a = new BPM();
-        a.buscaRecursiva(pasta, "");
-        System.out.println("sss");
-        System.out.println("");
+        //args = "D:\\\\Offs\\\\Jhonathan\\\\R\\\\Rede\\\\01-MJC MUSIC-COMPLETA";
+        //TrackAnalyzer.main(args);
+        TrackAnalyzer.main("D:\\Offs\\Jhonathan\\R\\Rede\\01-MJC MUSIC-COMPLETA");
+        
     }
 
     public List<File> buscaRecursiva(File pasta, String ext) {
