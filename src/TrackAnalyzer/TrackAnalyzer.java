@@ -371,6 +371,7 @@ public class TrackAnalyzer {
             pastasESUB=0;
             analyzeTrack(arquivos[pastasESUB++].getAbsolutePath(), true);
         }
+        System.exit(0);
         /*for (int j = 0; j < arquivos.length; j++) {
             System.out.println(nomeBpm.get(j));
         }*/
