@@ -89,9 +89,9 @@ public class TrackAnalyzer {
     int percorrer = 0;
     ArrayList<String> nomeBpm = new ArrayList<>();
     
-    TrackAnalyzer(String[] args) throws Exception {
+    public TrackAnalyzer(String args) throws Exception {
         
-        File pasta = new File("D:\\Offs\\Jhonathan\\R\\Rede\\01-MJC MUSIC-NOVAS-2º SEMESTRE-2019");
+        File pasta = new File(""+args);
         buscaRecursiva(pasta, "");
         diretorio = new File(pastasSubpastas.get(percorrer));
         arquivos = diretorio.listFiles();
@@ -430,7 +430,7 @@ public class TrackAnalyzer {
         System.exit(0);
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String args) throws Exception {
         TrackAnalyzer ta = new TrackAnalyzer(args);
         ta.run();
     }
