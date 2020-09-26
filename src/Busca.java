@@ -1,6 +1,3 @@
-
-
-import bpm.Mp3;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,6 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
 
 public class Busca {
 
@@ -32,7 +30,7 @@ public class Busca {
         for (int i = 0; i < mp3.size(); i++) {
             
                 System.out.println(mp3.get(i).arquivo.getAbsolutePath());
-                
+                System.out.println(mp3.get(i).bpm);
             
         }
         System.out.println(my_bpm.size() + "---" + my_nome.size());
