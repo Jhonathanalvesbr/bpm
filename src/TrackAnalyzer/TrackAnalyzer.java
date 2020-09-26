@@ -23,6 +23,7 @@
 package TrackAnalyzer;
 
 import at.ofai.music.beatroot.BeatRoot;
+import bpm.Mp3;
 import it.sauronsoftware.jave.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -62,45 +63,23 @@ import com.beust.jcommander.Parameter;
 import java.util.List;
 
 public class TrackAnalyzer {
-
-    List<File> resultados = new ArrayList<File>();
-    ArrayList<String> pastasSubpastas = new ArrayList<>();
-    
-    public List<File> buscaRecursiva(File pasta, String ext) {
-        for (File f : pasta.listFiles()) {
-            if (f.isDirectory()) {
-                pastasSubpastas.add(f.getAbsolutePath());
-               
-                
-            } 
-
-        }
-        return resultados;
-    }
+    Mp3 mp3;
 
     CommandLineArgs c = new CommandLineArgs();
     BufferedWriter writeListWriter;
     ArrayList<String> filenames = new ArrayList<String>();
     //public final KeyFinder k;
     public final Parameters p;
-    int pastasESUB = 0;
-    File diretorio;
-    File[] arquivos;
-    int percorrer = 0;
-    ArrayList<String> nomeBpm = new ArrayList<>();
+
     
     public TrackAnalyzer(String args) throws Exception {
         
-        File pasta = new File(""+args);
-        buscaRecursiva(pasta, "");
-        diretorio = new File(pastasSubpastas.get(percorrer));
-        arquivos = diretorio.listFiles();
-        
-        JCommander jcommander = new JCommander(c, arquivos[pastasESUB++].getAbsolutePath());
+
+        JCommander jcommander = new JCommander(c, args);
         jcommander.setProgramName("TrackAnalyzer");
         if ((c.filenames.size() == 0 && Utils.isEmpty(c.filelist)) || c.help) {
             jcommander.usage();
-            System.exit(-1);
+            //System.exit(-1);
         }
         if (c.debug) {
             Logger.getLogger(TrackAnalyzer.class.getName()).setLevel(Level.ALL);
@@ -130,7 +109,7 @@ public class TrackAnalyzer {
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
-                System.exit(-1);
+                //System.exit(-1);
             }
         }
         // add filenames from command line
@@ -196,6 +175,13 @@ public class TrackAnalyzer {
 
     }
 
+    public TrackAnalyzer() {
+        this.mp3 = null;
+        this.writeListWriter = null;
+        this.p = null;
+    }
+
+    
     /**
      * this writes a line to a txt file with the result of the detection process
      * for one file.
@@ -211,7 +197,7 @@ public class TrackAnalyzer {
                 writeListWriter.write(filename + ";" + key + ";" + bpm + ";" + wroteTags);
                 writeListWriter.newLine();
                 writeListWriter.flush();
-                System.out.println(filename + ";" + key + ";" + bpm + ";" + wroteTags);
+                //System.out.println(filename + ";" + key + ";" + bpm + ";" + wroteTags);
 
             } catch (IOException ex) {
                 Logger.getLogger(TrackAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
@@ -358,20 +344,11 @@ public class TrackAnalyzer {
             }
         }
         //System.out.printf("%s key: %s BPM: %s\n", filename, Parameters.camelotKey(r.globalKeyEstimate), formattedBpm);
-        System.out.println(filename+"...."+formattedBpm);
-        nomeBpm.add(filename + "...." + formattedBpm);
+        //System.out.println(filename+"...."+formattedBpm);
+        //nomeBpm.add(filename + "...." + formattedBpm);
+        mp3 = new Mp3(new File(filename),formattedBpm);
         
-        if (pastasESUB < arquivos.length) {
-            analyzeTrack(arquivos[pastasESUB++].getAbsolutePath(), true);
-        }
-        for (int i = 0; i < pastasSubpastas.size(); i++) {
-            percorrer++;
-            diretorio = new File(pastasSubpastas.get(percorrer));
-            arquivos = diretorio.listFiles();
-            pastasESUB=0;
-            analyzeTrack(arquivos[pastasESUB++].getAbsolutePath(), true);
-        }
-        System.exit(0);
+       
         /*for (int j = 0; j < arquivos.length; j++) {
             System.out.println(nomeBpm.get(j));
         }*/
@@ -427,12 +404,15 @@ public class TrackAnalyzer {
                 Logger.getLogger(TrackAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        System.exit(0);
+        //System.exit(0);
     }
 
-    public static void main(String args) throws Exception {
+    public Mp3 m(String args) throws Exception {
         TrackAnalyzer ta = new TrackAnalyzer(args);
         ta.run();
+        
+
+        return ta.mp3;
     }
 
     /**
