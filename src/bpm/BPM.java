@@ -33,7 +33,7 @@ public class BPM {
         
         String saida_json = "C:\\Users\\Jhonathan Alves\\Documents\\NetBeansProjects\\bpm-master\\src\\saida.json";
         BPM programa = new BPM();
-        programa.listar(new File("E:\\Trilhas\\REDE\\01-MJC MUSIC-NOVAS-1º SEMESTRE-2020"));
+        programa.listar(new File("E:\\Trilhas"));
 
         programa.buscaMP3(programa, arq);
 
@@ -62,12 +62,12 @@ public class BPM {
 
         if (my_nome != null) {
             for (int i = 0; i < my_nome.size(); i++) {
-                a.add(my_nome.get(i).toString().substring(my_nome.get(i).toString().lastIndexOf("\\") + 1));
+                a.add(my_nome.get(i).toString());
             }
             for (int i = 0; i < arq.size(); i++) {
                 for (int j = 0; j < arq.get(i).arquivos.size(); j++) {
                     for (int k = 0; k < a.size(); k++) {
-                        if (arq.get(i).arquivos.get(j).arquivo.getName().equals(a.get(k))) {
+                        if (arq.get(i).arquivos.get(j).arquivo.getAbsolutePath().equals(a.get(k))) {
                             arq.get(i).arquivos.remove(j);
                         }
                     }
