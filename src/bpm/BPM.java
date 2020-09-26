@@ -18,7 +18,9 @@ import org.json.simple.parser.ParseException;
 public class BPM {
 
     ArrayList<File> lista = new ArrayList<>();
-
+    JSONArray my_nome = new JSONArray();
+    JSONArray my_bpm = new JSONArray();
+    
     public static void main(String[] args) throws Exception {
         // TODO code application logic here
         //args = "D:\\\\Offs\\\\Jhonathan\\\\R\\\\Rede\\\\01-MJC MUSIC-COMPLETA";
@@ -27,8 +29,7 @@ public class BPM {
 
         ArrayList<Arquivo> arq = new ArrayList<>();
         JSONObject my_obj = new JSONObject();
-        JSONArray my_nome = new JSONArray();
-        JSONArray my_bpm = new JSONArray();
+        
         String pasta;
         
         String saida_json = "C:\\Users\\Jhonathan Alves\\Documents\\NetBeansProjects\\bpm-master\\src\\saida.json";
@@ -36,16 +37,17 @@ public class BPM {
         programa.listar(new File("E:\\Trilhas"));
 
         programa.buscaMP3(programa, arq);
-
+        
         File file = new File(saida_json);
         if (file.exists()) {
             if (file.length() > 0) {
-                programa.busca(arq, my_nome, my_bpm, saida_json);
+                programa.busca(arq, programa.my_nome, programa.my_bpm, saida_json);
             }
         }
         if (arq.size() > 0) {
-            programa.inserirJson(arq, my_nome, my_bpm, my_obj, saida_json);
+            programa.inserirJson(arq, programa.my_nome, programa.my_bpm, my_obj, saida_json);
         }
+        
 
     }
 
@@ -54,21 +56,24 @@ public class BPM {
         JSONParser parser = new JSONParser();
         jsonObject = (JSONObject) parser.parse(new FileReader(
                 saida_json));
-        my_nome = (JSONArray) jsonObject.get("nome");
-        my_bpm = (JSONArray) jsonObject.get("bpm");
+        this.my_nome = (JSONArray) jsonObject.get("nome");
+        this.my_bpm = (JSONArray) jsonObject.get("bpm");
         ArrayList<String> busca = new ArrayList<>();
 
         ArrayList<String> a = new ArrayList<>();
 
-        if (my_nome != null) {
-            for (int i = 0; i < my_nome.size(); i++) {
-                a.add(my_nome.get(i).toString());
+        if (this.my_nome != null) {
+            for (int i = 0; i < this.my_nome.size(); i++) {
+                a.add(this.my_nome.get(i).toString());
             }
+            
             for (int i = 0; i < arq.size(); i++) {
                 for (int j = 0; j < arq.get(i).arquivos.size(); j++) {
                     for (int k = 0; k < a.size(); k++) {
-                        if (arq.get(i).arquivos.get(j).arquivo.getAbsolutePath().equals(a.get(k))) {
+                        if (arq.get(i).arquivos.get(j).arquivo.getAbsolutePath().equals(a.get(k).toString())) {
                             arq.get(i).arquivos.remove(j);
+                            j--;
+                            break;
                         }
                     }
                 }
@@ -83,14 +88,14 @@ public class BPM {
 
                 TrackAnalyzer track = new TrackAnalyzer();
                 Mp3 mp;
-
+                
                 mp = track.m("" + arq.get(i).arquivos.get(j).arquivo.getAbsolutePath());
 
-                my_nome.add("" + mp.arquivo.getAbsolutePath());
-                my_bpm.add("" + mp.bpm);
+                this.my_nome.add("" + mp.arquivo.getAbsolutePath());
+                this.my_bpm.add("" + mp.bpm);
                 //System.out.println(mp.arquivo.getAbsolutePath());
-                my_obj.put("nome", my_nome);
-                my_obj.put("bpm", my_bpm);
+                my_obj.put("nome", this.my_nome);
+                my_obj.put("bpm", this.my_bpm);
                 writeFile = new FileWriter(saida_json);
                 writeFile.write(my_obj.toJSONString());
                 writeFile.close();
