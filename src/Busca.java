@@ -15,7 +15,7 @@ public class Busca {
     public static void main(String[] args) throws IOException, ParseException {
         JSONArray my_nome = new JSONArray();
         JSONArray my_bpm = new JSONArray();
-        String saida_json = "C:\\Users\\Jhonathan Alves\\Documents\\NetBeansProjects\\bpm-master\\src\\saida.json";
+        String saida_json = "C:\\Users\\Jhonathan Alves\\Documents\\NetBeansProjects\\bpm-master\\src\\data.json";
         ArrayList<Mp3> mp3 = new ArrayList<>();
         JSONObject jsonObject;
         JSONParser parser = new JSONParser();
@@ -39,8 +39,8 @@ public class Busca {
         
         for (int i = 0; i < mp3.size(); i++) {
             
-                if(mp3.get(i).bpm >= 135 && mp3.get(i).bpm <= 145){
-                    System.out.println(mp3.get(i).bpm);
+                if(mp3.get(i).bpm >= 160 /*&& mp3.get(i).bpm <= 145*/){
+                   // System.out.println(mp3.get(i).bpm);
                     System.out.println(mp3.get(i).arquivo.getAbsolutePath());
                     musicas += (src+mp3.get(i).arquivo.getName()+"\n"+mp3.get(i).arquivo.getAbsolutePath()+"\n\n");
                 }
