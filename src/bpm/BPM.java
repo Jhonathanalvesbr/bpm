@@ -34,7 +34,7 @@ public class BPM {
         
         String saida_json = "C:\\Users\\Jhonathan Alves\\Documents\\NetBeansProjects\\bpm-master\\src\\saida.json";
         BPM programa = new BPM();
-        programa.listar(new File("E:\\Trilhas"));
+        programa.listar(new File("E:\\Trilhas\\InterVox"));
 
         programa.buscaMP3(programa, arq);
         

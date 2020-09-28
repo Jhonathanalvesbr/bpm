@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -27,12 +29,26 @@ public class Busca {
             mp3.add(mp);
         }
         
+        String in = "#EXTM3U\n";
+        String src = "#EXTINF:0,";
+        String srcFim = "\">";
+        String musicas = "";
+        
+        FileWriter arq = new FileWriter("E:\\Trilhas\\Musicas.m3u");
+        PrintWriter gravarArq = new PrintWriter(arq);
+        
         for (int i = 0; i < mp3.size(); i++) {
             
-                System.out.println(mp3.get(i).arquivo.getAbsolutePath());
-                System.out.println(mp3.get(i).bpm);
-            
+                if(mp3.get(i).bpm >= 135 && mp3.get(i).bpm <= 145){
+                    System.out.println(mp3.get(i).bpm);
+                    System.out.println(mp3.get(i).arquivo.getAbsolutePath());
+                    musicas += (src+mp3.get(i).arquivo.getName()+"\n"+mp3.get(i).arquivo.getAbsolutePath()+"\n\n");
+                }
         }
+        
+        gravarArq.print(in+musicas);
+        arq.close();
+        java.awt.Desktop.getDesktop().open( new File( "E:\\Trilhas\\Musicas.m3u" ) );
         System.out.println(my_bpm.size() + "---" + my_nome.size());
     }
     
