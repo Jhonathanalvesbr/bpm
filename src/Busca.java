@@ -39,10 +39,11 @@ public class Busca {
         
         for (int i = 0; i < mp3.size(); i++) {
             
-                if(mp3.get(i).bpm >= 160 /*&& mp3.get(i).bpm <= 145*/){
-                   // System.out.println(mp3.get(i).bpm);
+                if(mp3.get(i).bpm >= 135 && mp3.get(i).bpm <= 145){
+                    System.out.println(mp3.get(i).bpm);
                     System.out.println(mp3.get(i).arquivo.getAbsolutePath());
                     musicas += (src+mp3.get(i).arquivo.getName()+"\n"+mp3.get(i).arquivo.getAbsolutePath()+"\n\n");
+                    break;
                 }
         }
         
